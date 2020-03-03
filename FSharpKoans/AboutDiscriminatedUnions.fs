@@ -44,14 +44,14 @@ module ``07: The Good Kind of Discrimination`` =
             | BSc (_, ComputerScience) | BSc (ComputerScience, _) -> "Good choice!"
             | BSc _ -> "!!SCIENCE!!"
             | BPharm -> "Meh, it's OK."
-            | FILL_ME_IN -> "Money, money, money."
-            | FILL_ME_IN -> "A thinker, eh?"
-        randomOpinion __ |> should equal "Good choice!"
-        randomOpinion __ |> should equal "!!SCIENCE!!"
+            | BCom _-> "Money, money, money."
+            | BA _ -> "A thinker, eh?"
+        randomOpinion (BSc(Linguistics, ComputerScience)) |> should equal "Good choice!"
+        randomOpinion (BSc (ComputerScience, Linguistics)) |> should equal "!!SCIENCE!!"
         randomOpinion (BCom (Management, Economics)) |> should equal "Money, money, money."
         randomOpinion (BCom (Linguistics, Management)) |> should equal "Money, money, money."
         randomOpinion (BA (Linguistics, Philosophy)) |> should equal "A thinker, eh?"
-        randomOpinion __ |> should equal "Meh, it's OK."
+        randomOpinion (BPharm) |> should equal "Meh, it's OK."
 
     [<Test>]
     let ``03 We can create a discriminated union using named fields`` () =
