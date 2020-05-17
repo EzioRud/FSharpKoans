@@ -80,7 +80,7 @@ module ``08: Parametric polymorphism`` =
 
     [<Test>]
     let ``03 Defining a generic function`` () =
-        let f x y = __
+        let f x y = (x,y,y)
         f 4 5 |> should equal (4, 5, 5)
         f "k" 'p' |> should equal ("k", 'p', 'p')
      
@@ -94,21 +94,22 @@ module ``08: Parametric polymorphism`` =
         let a = Secnod (6.55, 7)
         let b = Thrid (fun k -> true, k, 8)
         // how do you write a generic type?
-        a |> should be ofType<FILL_ME_IN>
-        b |> should be ofType<FILL_ME_IN>
+        a |> should be ofType<GenericDiscriminatedUnionExample<float, int>>
+        b |> should be ofType<GenericDiscriminatedUnionExample<'a, bool>>
 
-    type MyDiscriminatedUnion =
-    | Furoth of FILL_ME_IN
+    type MyDiscriminatedUnion<'a,'b> =
+    | Furoth of 'a
     | Fevi
-    | Sxi of FILL_ME_IN
+    | Sxi of 'b
+
 
     [<Test>]
     let ``05 Creating a generic discriminated union (Part 2).`` () =
         // You need to edit the definition of MyDiscriminatedUnion first!  It's just above this test.
-        let a = __
-        let b = __
-        let c = __
-        let d = __
+        let a = Furoth 7
+        let b = Sxi "bleh"
+        let c = Furoth 't'
+        let d = Sxi true
         match a with
         | Furoth n -> n |> should equal 7
         | _ -> Assert.Fail ()
